@@ -1,0 +1,247 @@
+﻿@model User
+
+<div id="navbar"></div>
+
+
+<div class="container text-center" style="max-width: 1322px;">
+    <div class="row align-items-center">
+
+        @* logo *@
+        <div class="col-3">
+            <a href="/"><img class="logo" src="~/images/Small_Logo.jpg" alt="logo"></a>
+        </div>
+        @* Link Container *@
+        <div class="col-6">
+            <div class="row justify-content-between">
+                @* Our Park *@
+                <div class="col">
+                    <div class="display-6">
+                        <a href="#our-park" class="no-decoration">Our Park</a>
+                    </div>
+                </div>
+
+                @* Open Hours *@
+                <div class="col">
+                    <div class="display-6">
+                        <a href="#open-hours" class="no-decoration">Open Hours</a>
+                    </div>
+                </div>
+
+                @* Boarding *@
+                <div class="col">
+                    <div class="display-6">
+                        <a href="#boarding" class="no-decoration">Boarding</a>
+                    </div>
+                </div>
+
+                @* Contact Us *@
+                <div class="col">
+                    <div class="display-6">
+                        <a href="#contact-us" class="no-decoration">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* Login *@
+        <div class="col-3 d-flex align-items-center justify-content-end">
+            <div class="col-4 mb-3 d-flex align-items-center">
+                @{
+                    if (Context.Session.GetInt32("UserId") == null)
+                    {
+                        <a href="/users/new" class="d-block text-black no-decoration"><h3>REGISTER</h3></a>
+                        <a href="/users/new" class="d-block m-2"><button class="btn btn-info">LOGIN</button></a>
+                    }
+                    else
+                    {
+                        int? currentUserId = Context.Session.GetInt32("UserId");
+
+                        <h1>@Model.FirstName</h1>
+
+                        <a href="/users/new" class="d-block text-black no-decoration"><h3></h3></a>
+
+                        <a href="/users/@currentUserId/show" class="d-block text-black no-decoration"><h3>View Profile</h3></a>
+                        <a href="/users/logout" class="d-block m-2"><button class="btn btn-info">LOGOUT</button></a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<body>
+  
+  <ul>
+    <a href="#our-park"></a>
+  </ul>
+
+  <div id="our-park">
+    <div class="container drop-shadow">
+
+      @* Welcome Description *@
+      <h2 class="display-3 text-center p-3">Dogs. Drinks. Food. And Friends</h2>
+      <div class="row">
+        
+        <div class="col-md-2"></div>
+        
+        <h3 class="text-center display-6 col-md-8">
+          Unwind at Howls Moving Dog Park in Old Town, a dog lover's paradise. Your pup enjoys playtime while you savor delicious food and craft beer. It's where dog lovers unite for unforgettable moments!
+        </h3>
+
+        <div class="col-md-2"></div>
+      </div>
+
+      @* Carousel *@
+      <div class="p-5">
+        @await Html.PartialAsync("_Carousel")
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+<br>
+<br>
+<br>
+
+
+  <div id="open-hours">
+    <div class="container drop-shadow p-5">
+      <div class="row">
+        <div class="col-md-2"></div>
+        
+        <div class="col-md-10">
+          <div>
+            <h2 class="display-4 m-4">OPENING HOURS</h2>
+          </div>
+          <div class="row">
+              <div class="row m-2">
+                  <div class="display-6 col">MONDAY-FRIDAY</div>
+                  <div class="display-6 col">1PM-9PM</div>
+              </div>
+              <div class="row m-2">
+                  <div class="display-6 col">SATURDAY</div>
+                  <div class="display-6 col">11AM-10PM</div>
+              </div>
+              <div class="row m-2">
+                  <div class="display-6 col">SUNDAY</div>
+                  <div class="display-6 col">11AM-9PM</div>
+              </div>
+          </div>
+          <br>
+        </div>
+        
+        <div class="col-md-2"></div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+<br>
+<br>
+
+
+  <div id="boarding">
+    <div class="container drop-shadow p-5 text-center">
+      <div class="row">
+        <div class="col-md-1"></div>
+        
+        <div class="col-md-10 text-center">
+          <div class="row">
+            <h2 class="display-5 m-3 bg bg-warning">BOARDING AT HOWLS</h2>
+            <div class="row m-1">
+              <div class="display-6 m-3">
+                <div>Howls offers two boarding options to depending on your current membership</div>
+              </div>
+              <div class="row">
+                <div class="col display-6">
+                  <div>
+                    Full Moon
+                  </div>
+                  <div>
+                    Overnight Boarding with midday drop-off and early morning pick-up. Multiple nights are available.
+                  </div>
+                </div>
+                <div class="col display-6">
+                  <div>
+                    Half Moon
+                  </div>
+                  <div>
+                    DayCare boarding from 7AM-6PM. Meals included. Contact about dietary requests.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-1"></div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+<br>
+<br>
+
+
+  <div id="contact-us">
+      <div class="container drop-shadow p-5">
+        <div class="row">
+          <div class="col-md-1"></div>
+          
+          <div class="col-md-10">
+              <div>
+                <h2 class="display-4 m-4">Contact Us</h2>
+              </div>
+              <div class="row">
+                  <div class="row m-2">
+                    <div class="display-6 col">HowlsDogPark@network.com</div>
+                  </div>
+                  <div class="row m-2">
+                    <div class="display-6 col">555-555-6789</div>
+                  </div>
+                  <div class="row m-2">
+                      <div class="display-6 col">1234 Old Town Avenue, West City, Seattle, 98765</div>
+                  </div>
+              </div>
+
+            <div class="row">
+              <div class="row m-1">
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-1"></div>
+
+        </div>
+    </div>
+  </div>
+
+</body>
+</html>
+
+
+<div class="floating-bar">
+<a href="#navbar"><button class="return-button bg bg-info display-4 d-flex justify-content-center align-items-center">^</button></a>
+</div>
+<script src="script.js"></script>
+
+
+<div class="row text-center">
+    @await Html.PartialAsync("_NavigationBar")
+</div>
+
+
+
+

@@ -1,0 +1,291 @@
+@model User
+
+<div id="navbar"></div>
+
+<div class="container text-center" style="max-width: 1322px;">
+    <div class="row align-items-center justify-content-between">
+        @* logo *@
+        <div class="col-md-3">
+            <a href="/"><img class="logo" src="~/images/Small_Logo.jpg" alt="logo"></a>
+        </div>
+        @* Membership *@
+        <div class="col-md-2">
+            <div class="display-6">
+                <a href="#membership" class="no-decoration">Membership</a>
+            </div>
+        </div>
+        @* yourdogs *@
+        <div class="col-md-2">
+            <div class="display-6">
+                <a href="#your-dogs" class="no-decoration">Your Dogs</a>
+            </div>
+        </div>
+
+        @* Boarding *@
+        <div class="col-md-2">
+            <div class="display-6">
+                <a href="#boardings" class="no-decoration">Boardings</a>
+            </div>
+        </div>
+        @* Login *@
+            <div class="col-md-3 d-flex align-items-center">
+                <div class="col-md-4 mb-3 d-flex align-items-center">
+                    @{
+                        if(Context.Session.GetInt32("UserId") == null)
+                        {
+                            <a href="/users/new" class="d-block text-black no-decoration"><h3>REGISTER</h3></a>
+                            <a href="/users/new" class="d-block m-2"><button class="btn btn-info">LOGIN</button></a>
+                        }
+                        else
+                        {
+                            int? currentUserId = Context.Session.GetInt32("UserId");
+
+                            <a href="/users/new" class="d-block text-black no-decoration"><h3>Hi @Model.FirstName</h3></a>
+
+                            <a href="/users/@currentUserId/show" class="d-block text-black no-decoration"><h3>View Profile</h3></a>
+                            <a href="/users/logout" class="d-block m-2"><button class="btn btn-info">LOGOUT</button></a>
+                        }
+                    }
+                </div>
+          </div>
+    </div>
+</div>
+
+
+
+<div>
+<h2 class="display-4 m-4 text-center">Hello @Model.FirstName @Model.LastName</h2>
+</div>
+
+  <div id="membership">
+    <div class="container drop-shadow p-5">
+      <div class="row">
+        <div class="col-md-1"></div>
+        
+        <div class="col-md-10">
+
+          </div>
+          <br>
+
+          <div class="row">
+            <h2 class="display-5 m-3 bg bg-warning col">CURRENT MEMBERSHIP</h2>
+            <div class="row m-1">
+              
+              @if(@Model.Membership != null)
+              {
+                <div>
+                  <h1>@Model.Membership.MembershipType</h1>
+                </div>
+              }
+
+            <div class="row m-5">
+              <a class="col-2" href="/membership/join"><button>Sign-Up For A Membership</button></a>
+              <div class="col-6"></div>
+              <a class="col-2" href="/membership/new"><button>Create a Membership (Admin Only)</button></a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-1"></div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+<br>
+<br>
+
+  <div id="your-dogs">
+    <div class="container drop-shadow p-5">
+      <div class="row">
+        <div class="col-md-1"></div>
+        
+        <div class="col-md-10">
+
+          </div>
+          <br>
+
+          @* Displays Your Dogs *@
+          <div class="row">
+            <h2 class="display-5 m-3 bg bg-warning col">YOUR DOGS</h2>
+            <div class="row m-1">
+                <div class="display-6 col">
+                  @foreach (Dog currentDog in @Model.AllDogs)
+                  {
+                  <div class="container drop-shadow p-5">
+                      <table class="table">
+                        <h1 class="display-1 mb-5 ml-4"> @currentDog.Name</h1>
+                          <tbody>
+                              <tr>
+                                  <th class="col-2 display-6">Breed</th>
+                                  <td class="col-6 display-6">@currentDog.Breed</td>
+                              </tr>
+                              <tr>
+                                  <th class="display-6">Weight</th>
+                                  <td class="display-6">@currentDog.Weight lbs</td>
+                              </tr>
+                              <tr>
+                                  <th class="display-6">Age</th>
+                                  <td class="display-6">@currentDog.Age Years</td>
+                              </tr>
+                              <tr>
+                                  <th class="display-6">Temperament</th>
+
+                                  <td class="display-6">
+                                    @currentDog.Temperament
+                                  </td>
+
+                                  <tr class="m-2">
+                                      <th class="col-2 display-6"><label for="temperament" class="form-label">Temperament</label></th>
+                                      <td>
+                                          <div class="row">
+                                              <div class="d-flex">
+                                                <div class="col">
+                                                    <div class="col">
+                                                        <p id="temperamentDisplay" class="col display-6"></p>
+                                                    </div>
+                                                    <div class="slider-container col">
+                                                        <div value="@currentDog.Temperament" id="profileTemperament">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                  <div class="col"></div>
+                                              </div>
+                                          </div>
+                                      </td>
+                                  </tr>
+
+                              </tr>
+                              <tr>
+                                  <th class="display-6">Vaccinated</th>
+                                    @if(@currentDog.Vaccinated == true)
+                                    {
+                                    <td class="display-6">Yes</td>
+                                    }
+                                    else
+                                    {
+                                    <td class="display-6">No</td>
+                                    }
+                              </tr>
+                              <tr>
+                                  <th class="display-6">Diet</th>
+                                  <td class="display-6">@currentDog.Diet</td>
+                              </tr>
+                              <tr >
+                                  <th class="display-6">Notes</th>
+                                  <td class="display-6">@currentDog.Notes</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      <div class="row">
+                        <div class="col">
+                          <th><a href="/dogs/@currentDog.DogId/edit"><button class="btn btn-warning text-white">UPDATE INFO</button></a></th>
+                        </div>
+                      </div>
+                  </div>
+                  <br>
+                  <br>
+                  }
+                  <div class="row">
+                    <div class="col">
+                      <th><a href="/dogs/new" class="text-white d-block"><button class="btn btn-primary text-white">ADD A DOG</button></a></th>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-1"></div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <br>
+<br>
+
+  <div id="boardings">
+    <div class="container drop-shadow p-5">
+      <div class="row">
+        <div class="col-md-1"></div>
+        
+        <div class="col-md-10">
+
+          </div>
+          <br>
+
+          <div class="row">
+            <h2 class="display-5 m-3 bg bg-warning col">YOUR BOARDINGS</h2>
+                <div class="row m-1">
+                  <div class="display-6 col">
+                  <div>@foreach(Boarding currentBoarding in Model.AllBoardings)
+                    {
+                    <div class="container drop-shadow">
+                      <table class="table">
+                          <tbody>
+                              <tr>
+                                  <th class="col-2 display-6">Dog</th>
+                                  <td class="col-6 display-6">@currentBoarding.RequesterDog.Name</td>
+                              </tr>
+                              <tr>
+                                  <th class="col-2 display-6">Date</th>
+                                  <td class="col-6 display-6">@currentBoarding.Date.ToString("MM/dd/yyyy")</td>
+                              </tr>
+                              <tr>
+                                  <th class="display-6">Time</th>
+                                  <td class="display-6">@currentBoarding.Time.ToString("HH:mm tt")</td>
+                              </tr>
+                              <tr>
+                                  <th class="display-6">Kennel #</th>
+                                  <td class="display-6">@currentBoarding.Kennel</td>
+                              </tr>
+                              <tr>
+                                  <th class="display-6">Notes</th>
+                                  <td class="display-6">@currentBoarding.Notes</td>
+                              </tr>
+                              <div class="row">
+                                <th>
+                                  <a href="/boarding/@currentBoarding.BoardingId/edit" class="text-white d-block m-3">
+                                  <button class="btn btn-warning text-white">Edit Your Boarding</button></a>
+                                  </th>
+                              </div>
+                          </tbody>
+                      </table>
+                      </div>
+                      <br>
+                    }
+                  </div>
+                </div>
+            <br>
+            </div>
+            <div class="row">
+              <div class="col">
+                <th><a href="/boarding/new" class="text-white d-block"><button class="btn btn-primary text-white">Request a Boarding</button></a></th>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-1"></div>
+
+      </div>
+    </div>
+  </div>
+
+
+<div class="row text-center">
+  @await Html.PartialAsync("_NavigationBar")
+</div>
+
+
+<div class="floating-bar">
+<a href="#navbar"><button class="return-button bg bg-info display-4 d-flex justify-content-center align-items-center">^</button></a>
+</div>
+<script src="script.js"></script>
+
+

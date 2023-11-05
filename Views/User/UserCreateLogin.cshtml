@@ -1,0 +1,22 @@
+
+<div>
+    @await Html.PartialAsync("_NavigationBar")
+</div>
+
+<br>
+
+<div class="container text-center">
+
+    <div class="row">
+        <div class="col-lg-6">
+            <h1 class="display-3">Create User</h1>
+            @await Html.PartialAsync("_UserCreate")
+        </div>
+
+        <div class="col-lg-6">
+            <h1 class="display-3">Login</h1>
+            @await Html.PartialAsync("_UserLogin")
+        </div>
+    </div>
+
+</div>

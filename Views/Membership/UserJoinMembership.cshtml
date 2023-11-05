@@ -1,0 +1,64 @@
+@model List<Membership>
+
+  <div id="membership">
+    <div class="container drop-shadow p-5">
+      <div class="row">
+        <div class="col-md-1"></div>
+        
+        <div class="col-md-10">
+
+          </div>
+          <br>
+
+          @* Displays Your Dogs *@
+          <div class="row">
+            <h2 class="display-5 m-3 bg bg-warning col">Available Memberships</h2>
+            <div class="row m-1">
+                <div class="display-6 col">
+                  @foreach (Membership m in @Model)
+                  {
+                  <div class="container drop-shadow p-5">
+                      <table class="table">
+                        <h1 class="display-1 mb-5 ml-4"></h1>
+                          <tbody>
+                              <tr>
+                                  <th class="col-2 display-6">Membership Type</th>
+                                  <td class="col-6 display-6">@m.MembershipType</td>
+                              </tr>
+                              <tr>
+                                  <th class="display-6">Price</th>
+                                  <td class="display-6">$@m.Price</td>
+                              </tr>
+                              <tr>
+                                  <th class="display-6">Description</th>
+                                  <td class="display-6">@m.Description</td>
+                              </tr>
+                              <tr>
+                                  <th class="display-6">Notes</th>
+                                  <td class="display-6">@m.Notes</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      <div>
+                        <div class="row">
+                          <div class="col">
+                            <form asp-action="UserMembershipSubmit" asp-route-id="@m.MembershipId" method="post">
+                              <button class="btn btn-primary">SIGN UP</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                  <br>
+                  <br>
+                  }
+                </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-1"></div>
+
+      </div>
+    </div>
+  </div>

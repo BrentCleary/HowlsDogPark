@@ -1,0 +1,88 @@
+@model Dog
+
+<style>
+  .hidden-element
+  {
+    display: none;
+  }
+</style>
+
+@{
+    int? uid = @Context.Session.GetInt32("UserId");
+}
+
+<div>
+
+  <div class="container drop-shadow p-5">
+    <div>
+        <h1 class="display-4">Add A Dog to Your Profile</h1>
+    </div>
+
+      <form asp-action="CreateDog" asp-controller="Dog" method="post">
+        <table>
+            <tbody>
+                <tr class="m-2">
+                    <th class="col-2 display-6"><label for="name" class="form-label">Name</label></th>
+                    <td class="col-6"><input asp-for="Name" type="text" class="form-control" id="name" name="Name"></td>
+                </tr>
+                <tr class="m-2">
+                    <th class="col-2 display-6"><label for="breed" class="form-label">Breed</label></th>
+                    <td class="col-6"><input asp-for="Breed" type="text" class="form-control" id="breed" name="Breed"></td>
+                </tr>
+                <tr class="m-2">
+                    <th class="col-2 display-6"><label for="weight" class="form-label">Weight (lbs)</label></th>
+                    <td><input asp-for="Weight" type="number" class="form-control" id="weight" name="Weight"></td>
+                </tr>
+                <tr class="m-2">
+                    <th class="col-2 display-6"><label for="age" class="form-label">Age</label></th>
+                    <td><input asp-for="Age" type="number" class="form-control" id="age" name="Age"></td>
+                </tr>
+                <tr class="m-2">
+                    <th class="col-2 display-6"><label for="temperament" class="form-label">Temperament</label></th>
+                    <td>
+                        <div class="row">
+                            <div class="d-flex">
+                                <div class="col">
+                                    <div class="col">
+                                        <p id="slider-value" class="col display-6">Calm</p>
+                                    </div>
+                                    <div class="slider-container col">
+                                        <label class="slider-label">1</label>
+                                        <input type="range" min="1" max="5" step="1" value="3" id="slider" name="Temperament" class="slider-style">
+                                        <label class="slider-label">5</label>
+                                    </div>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="m-5">
+                    <th class="col-2 display-6">
+                        <label asp-for="Vaccinated" class="form-check-label" for="vaccinated">Vaccinated</label>
+                    </th>
+                    <td>
+                        <input asp-for="Vaccinated" type="checkbox" id="vaccinated-checkbox" class="checkbox-size"/>
+                    </td>
+                </tr>
+                <tr class="m-5">
+                    <th class="col-2 display-6"><label for="diet" class="form-label">Diet</label></th>
+                    <td><input asp-for="Diet" type="text" class="form-control" id="diet" name="Diet"></td>
+                </tr>
+                <tr class="m-2">
+                    <th class="col-2 display-6"><label for="notes" class="form-label">Notes</label></th>
+                    <td><textarea asp-for="Notes" class="form-control" id="notes" name="Notes" rows="4"></textarea></td>
+                </tr>
+                <tr class="m-2">
+                    <div class="hidden-element">
+                        <input asp-for="UserId" value="@uid">
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+  </div>
+
+</div>

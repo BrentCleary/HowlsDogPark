@@ -1,0 +1,79 @@
+@model List<Boarding>
+
+<br>
+
+<h1 class="display-4 text-center">All Boardings</h1>
+
+<div class="container text-center list-col-spacing">
+  <div class="row bg-warning">
+    <h1 class="col">BoardingId</h1>
+    <h1 class="col">Date</h1>
+    <h1 class="col">Notes</h1>
+    <h1 class="col">Make Reservation</h1>
+  </div>
+
+  @foreach(Boarding board in @Model)
+  {
+  <div class="row border border-5 border-secondary-color">
+    <h1 class="col">@board.BoardingId</h1>
+    
+    <h1 class="col">
+      @{
+        string formatedDate = @board.Date.ToString("MM-dd-yyyy hh:mm tt");  
+      }
+      @formatedDate
+    </h1>
+    
+    <h1 class="col">@board.Notes</h1>
+      @{
+        @* bool alreadyJoined = board.UserReservations.Any(u => u.UserId == Context.Session.GetInt32("UserId")); *@
+
+        <form class="col" asp-controller="Boarding" asp-action="ReserveBoarding" asp-route-boardingId="@board.BoardingId" method="post">
+          
+            @* @if(alreadyJoined) *@
+            {
+              <button id="reserve-btn" class="btn btn-danger">
+                <span>Leave</span>
+              </button>
+            }
+            else
+            {
+              <button id="reserve-btn" class="btn btn-info">
+                <span>Join</span>
+              </button>
+            }
+        </form>
+      }
+    
+  </div>
+  }
+
+
+
+
+<br>
+  <h1>Test Loops</h1>
+  @foreach(Boarding board in @Model)
+  {
+    <h1>Tejjst</h1>
+    @* @foreach(UserBoardingReservation reservation in board.UserReservations) *@
+    {
+      <h1>
+        @* @reservation.UserId *@
+      </h1>
+    }
+  }
+
+<br>
+
+
+
+
+
+</div>
+
+
+
+
+
+

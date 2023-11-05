@@ -1,0 +1,117 @@
+@model List<Dog>
+
+<div>
+  @await Html.PartialAsync("_NavigationBar")
+</div>
+
+<br>
+
+<h1 class="display-4 text-center">All Dogs</h1>
+
+<div class="container text-center list-col-spacing">
+    <div class="row bg-primary text-white">
+      <h1 class="col">Name</h1>
+      <h1 class="col">Breed</h1>
+      <h1 class="col">Weight</h1>
+      <h1 class="col">Age</h1>
+      <h1 class="col">Notes</h1>
+      <h1 class="col">DogId</h1>
+      <h1 class="col">Owner Id</h1>
+      <h1 class="col">Actions</h1>
+    </div>
+
+
+  @foreach(Dog onePet in @Model)
+  {
+    <div class="row border border-5 border-secondary-color">
+      <h1 class="col">@onePet.Name</h1>
+      <h1 class="col">@onePet.Breed</h1>
+      <h1 class="col">@onePet.Weight</h1>
+      <h1 class="col">@onePet.Age</h1>
+      <h1 class="col">@onePet.Notes</h1>
+      <h1 class="col">@onePet.DogId</h1>
+      <h1 class="col">@onePet.UserId</h1>
+      @if(onePet.UserId == Context.Session.GetInt32("UserId"))
+      {
+        <div>
+          <a href="/dogs/@onePet.DogId/edit"><button class="btn btn-warning text-white">Edit Dog</button></a>
+        </div>
+
+        <div>
+          <form asp-action="DeleteDog" asp-route-id="@onePet.DogId" method="post">
+            <button class="btn btn-danger" onclick="DeleteCheck()">DELETE</button>
+          </form>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+
+
+
+  <div class="row">
+    <div class="d-flex">
+      <div>
+        <p id="slider-value" class="col display-6">Calm</p>
+      </div>
+      <div class="slider-container col">
+          <label class="slider-label">1</label>
+          <input type="range" min="1" max="5" step="1" value="3" id="slider">
+          <label class="slider-label">5</label>
+      </div>
+    </div>
+  </div>
+
+<script>
+    var slider = document.getElementById("slider");
+    var output = document.getElementById("slider-value");
+
+    // Update the value as the slider is moved
+    slider.oninput = function () {
+        // Get the slider value
+        var sliderValue = parseInt(this.value);
+
+        // Define an object to map slider values to text descriptions
+        var valueDescriptions = {
+            1: "Fearful/Aggressive",
+            2: "Shy/Timid",
+            3: "Calm",
+            4: "Friendly",
+            5: "Happy/Playful"
+        };
+
+        // Check if the slider value exists in the mapping object
+        if (sliderValue in valueDescriptions) {
+            // Update the output text based on the slider value
+            output.textContent = valueDescriptions[sliderValue];
+        } else {
+            // Handle the case when the slider value is not in the mapping object
+            output.textContent = "Invalid value";
+        }
+    };
+</script>
+
+
+<script>
+  function DeleteCheck()
+  {
+    confirm("Do you want to delete this dog?");
+  }
+</script>
+
+<br>
+<br>
+
+    <style>
+        .slider-container {
+            width: 300px;
+            margin: 20px auto;
+        }
+
+        .slider-label {
+            display: inline-block;
+            width: 60px;
+            text-align: center;
+        }
+    </style>

@@ -1,0 +1,156 @@
+@model Dog
+
+<style>
+  .logo{
+    max-width: 50%;
+    max-height: 50%;
+  }
+
+</style>
+
+<div class="container text-center m-5" style="max-width: 1322px;">
+    <div class="row align-items-center justify-content-between">
+        @* logo *@
+        <div class="col-md-3">
+            <a href="/"><img class="logo" src="~/images/Small_Logo.jpg" alt="logo"></a>
+        </div>
+        @* Membership *@
+        <div class="col-md-2">
+            <div class="display-6">
+                <a href="#membership" class="no-decoration">Membership</a>
+            </div>
+        </div>
+        @* yourdogs *@
+        <div class="col-md-2">
+            <div class="display-6">
+                <a href="#your-dogs" class="no-decoration">Your Dogs</a>
+            </div>
+        </div>
+
+        @* Boarding *@
+        <div class="col-md-2">
+            <div class="display-6">
+                <a href="#boardings" class="no-decoration">Boardings</a>
+            </div>
+        </div>
+        @* Login *@
+            <div class="col-md-3 d-flex align-items-center">
+                <div class="col-md-4 mb-3 d-flex align-items-center">
+                    @{
+                        if(Context.Session.GetInt32("UserId") == null)
+                        {
+                            <a href="/users/new" class="d-block text-black no-decoration"><h3>REGISTER</h3></a>
+                            <a href="/users/new" class="d-block m-2"><button class="btn btn-info">LOGIN</button></a>
+                        }
+                        else
+                        {
+                            int? currentUserId = Context.Session.GetInt32("UserId");
+
+                            <a href="/users/@currentUserId/show" class="d-block text-black no-decoration"><h3>View Profile</h3></a>
+                            <a href="/users/logout" class="d-block m-2"><button class="btn btn-info">LOGOUT</button></a>
+                        }
+                    }
+                </div>
+          </div>
+    </div>
+</div>
+
+<div class="container drop-shadow p-5">
+    <div class="d-flex justify-content-between">
+        <h1 class="display-4">Update Your Dog's Information</h1>
+        <form asp-action="DeleteDog" asp-controller="Dog" asp-route-id="@Model.DogId" method="post"><button class="btn btn-danger">REMOVE</button></form>
+    </div>
+
+    <form asp-action="UpdateDog" asp-route-id="@Model.DogId" method="post">
+        
+        <table>
+            <tbody>
+                <tr>
+                    <th class="col-2 display-6"><label for="name" class="form-label">Name</label></th>
+                    <td class="col-6"><input asp-for="Name" type="text" class="form-control" id="name" name="Name"></td>
+                </tr>
+                <tr>
+                    <th class="col-2 display-6"><label for="breed" class="form-label">Breed</label></th>
+                    <td class="col-6"><input asp-for="Breed" type="text" class="form-control" id="breed" name="Breed"></td>
+                </tr>
+                <tr>
+                    <th class="col-2 display-6"><label for="weight" class="form-label">Weight (lbs)</label></th>
+                    <td><input asp-for="Weight" type="number" class="form-control" id="weight" name="Weight"></td>
+                </tr>
+                <tr>
+                    <th class="col-2 display-6"><label for="age" class="form-label">Age</label></th>
+                    <td><input asp-for="Age" type="number" class="form-control" id="age" name="Age"></td>
+                </tr>
+                <tr class="m-2">
+                    <th class="col-2 display-6"><label for="temperament" class="form-label">Temperament</label></th>
+                    <td>
+                        <div class="row">
+                            <div class="d-flex">
+                                <div class="col">
+                                    <div class="col">
+                                        <p id="slider-value" class="col display-6">Calm</p>
+                                    </div>
+                                    <div class="slider-container col">
+                                        <label class="slider-label">1</label>
+                                        <input type="range" min="1" max="5" step="1" value="@Model.Temperament" id="slider" name="Temperament" class="slider-style">
+                                        <label class="slider-label">5</label>
+                                    </div>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-2 display-6">
+                        <label asp-for="Vaccinated" class="form-check-label" for="vaccinated">Vaccinated</label>
+                    </th>
+                    <td>
+                        <input asp-for="Vaccinated" type="checkbox" id="vaccinated-checkbox" class="checkbox-size"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-2 display-6"><label for="diet" class="form-label">Diet</label></th>
+                    <td><input asp-for="Diet" type="text" class="form-control" id="diet" name="Diet"></td>
+                </tr>
+                <tr>
+                    <th class="col-2 display-6"><label for="notes" class="form-label">Notes</label></th>
+                    <td><textarea asp-for="Notes" class="form-control" id="notes" name="Notes" rows="4"></textarea></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <div class="row">
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        // Get a reference to the checkbox element
+        var checkbox = $("#vaccinated-checkbox");
+
+        // Add an event listener to the checkbox to update the model property
+        checkbox.on("change", function () {
+            // Update the model property 'Vaccinated' based on the checkbox's 'checked' state
+            var isChecked = checkbox.prop("checked");
+            @Model.Vaccinated = isChecked;
+        });
+    });
+</script>
+
+<br>
+<br>
+<br>
+<br>
+
+<div>
+  @await Html.PartialAsync("_NavigationBar")
+</div>

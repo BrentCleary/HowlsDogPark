@@ -1,0 +1,53 @@
+
+<div class="container text-center m-5" style="max-width: 1322px;">
+    <div class="row align-items-center justify-content-between">
+        @* logo *@
+        <div class="col-md-3">
+            <a href="/"><img class="logo" src="~/images/Small_Logo.jpg" alt="logo"></a>
+        </div>
+        @* Membership *@
+        <div class="col-md-2">
+            <div class="display-6">
+                <a href="#membership" class="no-decoration">Membership</a>
+            </div>
+        </div>
+        @* yourdogs *@
+        <div class="col-md-2">
+            <div class="display-6">
+                <a href="#your-dogs" class="no-decoration">Your Dogs</a>
+            </div>
+        </div>
+
+        @* Boarding *@
+        <div class="col-md-2">
+            <div class="display-6">
+                <a href="#boardings" class="no-decoration">Boardings</a>
+            </div>
+        </div>
+        @* Login *@
+            <div class="col-md-3 d-flex align-items-center">
+                <div class="col-md-4 mb-3 d-flex align-items-center">
+                    @{
+                        if(Context.Session.GetInt32("UserId") == null)
+                        {
+                            <a href="/users/new" class="d-block text-black no-decoration"><h3>REGISTER</h3></a>
+                            <a href="/users/new" class="d-block m-2"><button class="btn btn-info">LOGIN</button></a>
+                        }
+                        else
+                        {
+                            int? currentUserId = Context.Session.GetInt32("UserId");
+
+                            <a href="/users/@currentUserId/show" class="d-block text-black no-decoration"><h3>View Profile</h3></a>
+                            <a href="/users/logout" class="d-block m-2"><button class="btn btn-info">LOGOUT</button></a>
+                        }
+                    }
+                </div>
+          </div>
+    </div>
+</div>
+
+
+
+<div>
+  @await Html.PartialAsync("_DogCreate")
+</div>
