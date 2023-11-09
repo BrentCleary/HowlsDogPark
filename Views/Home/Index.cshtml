@@ -8,11 +8,11 @@
 
         @* logo *@
         <div class="col-3">
-            <a href="/"><img class="logo" src="~/images/Small_Logo.jpg" alt="logo"></a>
+            <a href="/"><img class="d-flex justify-content-start logo" src="~/images/Small_Logo.jpg" alt="logo"></a>
         </div>
         @* Link Container *@
         <div class="col-6">
-            <div class="row justify-content-between">
+            <div class="row justify-content-spaced align-items-center">
                 @* Our Park *@
                 <div class="col">
                     <div class="display-6">
@@ -44,7 +44,7 @@
         </div>
 
         @* Login *@
-        <div class="col-3 d-flex align-items-center justify-content-end">
+        <div class="col-3 d-flex align-items-center justify-content-start">
             <div class="col-4 mb-3 d-flex align-items-center">
                 @{
                     if (Context.Session.GetInt32("UserId") == null)
@@ -56,9 +56,9 @@
                     {
                         int? currentUserId = Context.Session.GetInt32("UserId");
 
-                        <h1>@Model.FirstName</h1>
+                        <h1 class="m-3">Hello @Model.FirstName</h1>
 
-                        <a href="/users/new" class="d-block text-black no-decoration"><h3></h3></a>
+                        <a href="/users/new" class="d-block text-black no-decoration m-1"><h3></h3></a>
 
                         <a href="/users/@currentUserId/show" class="d-block text-black no-decoration"><h3>View Profile</h3></a>
                         <a href="/users/logout" class="d-block m-2"><button class="btn btn-info">LOGOUT</button></a>
@@ -118,7 +118,7 @@
         
         <div class="col-md-10">
           <div>
-            <h2 class="display-4 m-4">OPENING HOURS</h2>
+            <h2 class="display-4 m-4 ">OPENING HOURS</h2>
           </div>
           <div class="row">
               <div class="row m-2">
